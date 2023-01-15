@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<%- include('../partials/head.ejs') %> 
+<body>
+
+  <%- include('../partials/nav.ejs') %> 
+
+    
+<div class="details content">      
+     <% blog.title%> 
+     <h3 class="title"><%= blog.title %>   </h3>
+     <p class="snippet"><%= blog.snippet %></p>
+     <div class="content"> 
+     <p> <%= blog.body %></p>
+    </div>
+
+              <!-- set data id to data-doc -->
+              <a class="delete" data-doc="<%= blog._id %>">
+                
+         <img src="/t1.svg" alt="delete icon" >
+        </a>
+    </div>
+      
+    
+    <script>
+
+        // send  the delete to the server and  get response of delete from the  server
+const trashcan  =  document.querySelector('a.delete');
+
+ trashcan.addEventListener('click', (e) => {
+    const endpoint = `/blogs/${trashcan.dataset.doc}`;
+
+    fetch(endpoint , {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => window.location.href = data.redirect)
+    .catch(err => console.log(err))
+ })
+
+    </script>
+
+</body>
+</html>
